@@ -7,23 +7,53 @@ const ctx = canvas.getContext("2d");
 canvas.width = 800;
 canvas.height = 800;
 
-ctx.fillRect(210 - 40, 200 - 20, 15, 100);
-ctx.fillRect(350 - 40, 200 - 20, 15, 100);
-ctx.fillRect(260 - 40, 200 - 20, 60, 200);
+ctx.lineWidth = 2;
 
-ctx.arc(250, 100, 50, 0, 2 * Math.PI); //원 만들기
-ctx.fill();
+const colors = [
+  "#ff3838",
+  "#ffb8b8",
+  "#c56cf0",
+  "#ff9f1a",
+  "#fff200",
+  "#32ff7e",
+  "#7efff5",
+  "#18dcff",
+  "#7d5fff",
+];
 
-ctx.beginPath(); //새로운 도형을 만들때 추가한다.
-ctx.fillStyle = "white";
-ctx.arc(260 + 10, 80, 8, Math.PI, 2 * Math.PI);
-ctx.arc(220 + 10, 80, 8, Math.PI, 2 * Math.PI);
-ctx.fill();
+let num = 1000;
 
-ctx.beginPath();
-ctx.fillStyle = "tomato";
-ctx.arc(250, 100, 20, 0, 1 * Math.PI);
-ctx.fill();
+function onClick(event) {
+  ctx.beginPath(); // beginPath 를 추가해서 onClick함수가 실행될 때마다 새로운 path를 만들어준다 == 이전 path에 영향 받지 않기위함.
+  const randomNumber = Math.random() * num;
+  ctx.moveTo(randomNumber, 400); //moveTo를 추가하면 최초 실행 클릭시 더블 클릭을 안해도 된다.
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  ctx.strokeStyle = color;
+  ctx.lineTo(event.offsetX, event.offsetY);
+  ctx.stroke(); // stroke를 추가해 주어야 선이 그려진다.
+}
+
+canvas.addEventListener("mousemove", onClick);
+
+//토르소 그리기 =====
+// ctx.fillRect(210 - 40, 200 - 20, 15, 100);
+// ctx.fillRect(350 - 40, 200 - 20, 15, 100);
+// ctx.fillRect(260 - 40, 200 - 20, 60, 200);
+
+// ctx.arc(250, 100, 50, 0, 2 * Math.PI); //원 만들기
+// ctx.fill();
+
+// ctx.beginPath(); //새로운 도형을 만들때 추가한다.
+// ctx.fillStyle = "white";
+// ctx.arc(260 + 10, 80, 8, Math.PI, 2 * Math.PI);
+// ctx.arc(220 + 10, 80, 8, Math.PI, 2 * Math.PI);
+// ctx.fill();
+
+// ctx.beginPath();
+// ctx.fillStyle = "tomato";
+// ctx.arc(250, 100, 20, 0, 1 * Math.PI);
+// ctx.fill();
+//======토르소 그리기
 
 // ctx.fillRect(200, 200, 50, 200);
 // ctx.fillRect(400, 200, 50, 200);
