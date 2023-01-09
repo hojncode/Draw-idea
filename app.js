@@ -8,32 +8,61 @@ canvas.width = 800;
 canvas.height = 800;
 
 ctx.lineWidth = 2;
+// ctx.moveTo(200, 200); // 선 시작점.
+// ctx.lineTo(400, 400); // 선 끝점.
+// ctx.stroke(); // 선 나타내기
 
-const colors = [
-  "#ff3838",
-  "#ffb8b8",
-  "#c56cf0",
-  "#ff9f1a",
-  "#fff200",
-  "#32ff7e",
-  "#7efff5",
-  "#18dcff",
-  "#7d5fff",
-];
+let isPainting = false;
 
-let num = 1000;
-
-function onClick(event) {
-  ctx.beginPath(); // beginPath 를 추가해서 onClick함수가 실행될 때마다 새로운 path를 만들어준다 == 이전 path에 영향 받지 않기위함.
-  const randomNumber = Math.random() * num;
-  ctx.moveTo(randomNumber, 400); //moveTo를 추가하면 최초 실행 클릭시 더블 클릭을 안해도 된다.
-  const color = colors[Math.floor(Math.random() * colors.length)];
-  ctx.strokeStyle = color;
-  ctx.lineTo(event.offsetX, event.offsetY);
-  ctx.stroke(); // stroke를 추가해 주어야 선이 그려진다.
+function onMove(event) {
+  if (isPainting) {
+    //여기서 isPainting 는 자동적으로 true이다.
+    ctx.lineTo(event.offsetX, event.offsetY);
+    ctx.stroke();
+    return;
+  } //! if문으로 return 하고 나면 ctx.moveTo가 불필요하게 실행되지 않는다 == if문으로 return 먼저하지 않으면 moveTo가 항상 동작하기 때문에, if문을 먼저 작성한다.
+  ctx.moveTo(event.offsetX, event.offsetY);
 }
 
-canvas.addEventListener("mousemove", onClick);
+function startPainting() {
+  isPainting = true;
+}
+
+function cancelPainting() {
+  isPainting = false;
+}
+canvas.addEventListener("mousemove", onMove);
+canvas.addEventListener("mousedown", startPainting);
+canvas.addEventListener("mouseup", cancelPainting);
+canvas.addEventListener("mouseleave", cancelPainting);
+
+// 레인보우 선  그리기 =====
+// const colors = [
+//   "#ff3838",
+//   "#ffb8b8",
+//   "#c56cf0",
+//   "#ff9f1a",
+//   "#fff200",
+//   "#32ff7e",
+//   "#7efff5",
+//   "#18dcff",
+//   "#7d5fff",
+// ];
+
+// let num = 1000;
+
+// function onClick(event) {
+//   ctx.beginPath(); // beginPath 를 추가해서 onClick함수가 실행될 때마다 새로운 path를 만들어준다 == 이전 path에 영향 받지 않기위함.
+//   const randomNumber = Math.random() * num;
+//   ctx.moveTo(randomNumber, 400); //moveTo를 추가하면 최초 실행 클릭시 더블 클릭을 안해도 된다.
+//   const color = colors[Math.floor(Math.random() * colors.length)];
+//   ctx.strokeStyle = color;
+//   ctx.lineTo(event.offsetX, event.offsetY);
+//   ctx.stroke(); // stroke를 추가해 주어야 선이 그려진다.
+// }
+
+// canvas.addEventListener("mousemove", onClick);
+// ===== 레인보우 선  그리기
 
 //토르소 그리기 =====
 // ctx.fillRect(210 - 40, 200 - 20, 15, 100);
