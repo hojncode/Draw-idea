@@ -1,3 +1,4 @@
+const lineWidth = document.getElementById("line-width");
 const canvas = document.querySelector("canvas");
 
 //context (ctx) 는 기본적으로 붓(브러쉬)다
@@ -7,7 +8,7 @@ const ctx = canvas.getContext("2d");
 canvas.width = 800;
 canvas.height = 800;
 
-ctx.lineWidth = 2;
+ctx.lineWidth = lineWidth.value;
 // ctx.moveTo(200, 200); // 선 시작점.
 // ctx.lineTo(400, 400); // 선 끝점.
 // ctx.stroke(); // 선 나타내기
@@ -30,11 +31,18 @@ function startPainting() {
 
 function cancelPainting() {
   isPainting = false;
+  ctx.beginPath();
+}
+function onLineWidthChange(event) {
+  console.log(event.target.value);
+  ctx.lineWidth = event.target.value;
 }
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", cancelPainting);
 canvas.addEventListener("mouseleave", cancelPainting);
+
+lineWidth.addEventListener("change", onLineWidthChange);
 
 // 레인보우 선  그리기 =====
 // const colors = [
