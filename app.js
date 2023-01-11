@@ -8,7 +8,7 @@ const ctx = canvas.getContext("2d");
 canvas.width = 800;
 canvas.height = 800;
 
-ctx.lineWidth = lineWidth.value;
+ctx.lineWidth = lineWidth.value; // 선 굵기 설정하기. lineWidth.value 값으로 굵기가 설정된다.
 // ctx.moveTo(200, 200); // 선 시작점.
 // ctx.lineTo(400, 400); // 선 끝점.
 // ctx.stroke(); // 선 나타내기
@@ -31,10 +31,9 @@ function startPainting() {
 
 function cancelPainting() {
   isPainting = false;
-  ctx.beginPath();
+  ctx.beginPath(); //! 꼭 추가해주어야 사용자가 이전에 그린것까지 바꾸지 않는다.
 }
 function onLineWidthChange(event) {
-  console.log(event.target.value);
   ctx.lineWidth = event.target.value;
 }
 canvas.addEventListener("mousemove", onMove);
