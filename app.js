@@ -1,3 +1,5 @@
+const color = document.getElementById("color");
+
 const lineWidth = document.getElementById("line-width");
 const canvas = document.querySelector("canvas");
 
@@ -7,7 +9,7 @@ const ctx = canvas.getContext("2d");
 //선을 그릴때 canvas에서의 이미지 퀄리티를 높이기위해 css중 width,height의 수정은 자바스크립트에서만 한다.
 canvas.width = 800;
 canvas.height = 800;
-
+ctx.color = color.value;
 ctx.lineWidth = lineWidth.value; // 선 굵기 설정하기. lineWidth.value 값으로 굵기가 설정된다.
 // ctx.moveTo(200, 200); // 선 시작점.
 // ctx.lineTo(400, 400); // 선 끝점.
@@ -36,13 +38,18 @@ function cancelPainting() {
 function onLineWidthChange(event) {
   ctx.lineWidth = event.target.value;
 }
+
+function onColorChange(event) {
+  ctx.strokeStyle = event.target.value; // strokeStyle 선의 스타일 (색상)을 담당.
+  ctx.fillStyle = event.target.value; // fillStyle 도형의 스타일을 담당.
+}
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", cancelPainting);
 canvas.addEventListener("mouseleave", cancelPainting);
 
 lineWidth.addEventListener("change", onLineWidthChange);
-
+color.addEventListener("change", onColorChange);
 // 레인보우 선  그리기 =====
 // const colors = [
 //   "#ff3838",
