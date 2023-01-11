@@ -1,3 +1,6 @@
+const colorOptions = Array.from(
+  document.getElementsByClassName("color-option")
+); // 아래에서 forEach 함수를 사용하기위해 배열로 만들어준다(forEach는 배열에서 동작하기 때문이다.)
 const color = document.getElementById("color");
 
 const lineWidth = document.getElementById("line-width");
@@ -43,6 +46,14 @@ function onColorChange(event) {
   ctx.strokeStyle = event.target.value; // strokeStyle 선의 스타일 (색상)을 담당.
   ctx.fillStyle = event.target.value; // fillStyle 도형의 스타일을 담당.
 }
+
+function onColorClick(event) {
+  console.dir(event.target.dataset.color);
+  const colorValue = event.target.dataset.color;
+  ctx.strokeStyle = colorValue; // strokeStyle 선의 스타일 (색상)을 담당.
+  ctx.fillStyle = colorValue; // fillStyle 도형의 스타일을 담당.
+  color.value = colorValue;
+}
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", cancelPainting);
@@ -50,6 +61,10 @@ canvas.addEventListener("mouseleave", cancelPainting);
 
 lineWidth.addEventListener("change", onLineWidthChange);
 color.addEventListener("change", onColorChange);
+
+console.log(colorOptions);
+colorOptions.forEach((color) => color.addEventListener("click", onColorClick));
+
 // 레인보우 선  그리기 =====
 // const colors = [
 //   "#ff3838",
