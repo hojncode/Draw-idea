@@ -1,4 +1,6 @@
 const modeBtn = document.getElementById("mode-btn");
+const destroyBtn = document.getElementById("destroy-btn");
+const eraseBtn = document.getElementById("erase-btn");
 const colorOptions = Array.from(
   document.getElementsByClassName("color-option")
 ); // 아래에서 forEach 함수를 사용하기위해 배열로 만들어준다(forEach는 배열에서 동작하기 때문이다.)
@@ -10,9 +12,12 @@ const canvas = document.querySelector("canvas");
 //context (ctx) 는 기본적으로 붓(브러쉬)다
 const ctx = canvas.getContext("2d");
 
+const CANVAS_WIDTH = 800;
+const CANVAS_HEIGHT = 800;
+
 //선을 그릴때 canvas에서의 이미지 퀄리티를 높이기위해 css중 width,height의 수정은 자바스크립트에서만 한다.
-canvas.width = 800;
-canvas.height = 800;
+canvas.width = CANVAS_WIDTH;
+canvas.height = CANVAS_HEIGHT;
 ctx.color = color.value;
 ctx.lineWidth = lineWidth.value; // 선 굵기 설정하기. lineWidth.value 값으로 굵기가 설정된다.
 // ctx.moveTo(200, 200); // 선 시작점.
@@ -69,8 +74,19 @@ function onModeClick() {
 
 function onCanvasClick() {
   if (isFilling) {
-    ctx.fillRect(0, 0, 800, 800);
+    ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
   }
+}
+
+function onDestroyClick() {
+  ctx.fillStyle = "white";
+  ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+}
+
+function onEraseClick() {
+  ctx.strokeStyle = "white";
+  isFilling = false;
+  modeBtn.innerText = "Fill";
 }
 
 canvas.addEventListener("mousemove", onMove);
@@ -85,6 +101,8 @@ console.log(colorOptions);
 colorOptions.forEach((color) => color.addEventListener("click", onColorClick));
 
 modeBtn.addEventListener("click", onModeClick);
+destroyBtn.addEventListener("click", onDestroyClick);
+eraseBtn.addEventListener("click", onEraseClick);
 
 // 레인보우 선  그리기 =====
 // const colors = [
