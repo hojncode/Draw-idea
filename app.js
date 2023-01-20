@@ -65,10 +65,10 @@ function onColorClick(event) {
 function onModeClick() {
   if (isFilling) {
     isFilling = false;
-    modeBtn.innerText = "Fill";
+    modeBtn.innerText = "그리기 모드";
   } else {
     isFilling = true;
-    modeBtn.innerText = "Draw";
+    modeBtn.innerText = "배경 채우기";
   }
 }
 
@@ -81,12 +81,13 @@ function onCanvasClick() {
 function onDestroyClick() {
   ctx.fillStyle = "white";
   ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+  onModeClick();
 }
 
 function onEraseClick() {
   ctx.strokeStyle = "white";
   isFilling = false;
-  modeBtn.innerText = "Fill";
+  modeBtn.innerText = "지우개 모드";
 }
 
 canvas.addEventListener("mousemove", onMove);
