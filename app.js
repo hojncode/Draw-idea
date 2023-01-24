@@ -1,3 +1,4 @@
+const fileInput = document.getElementById("file");
 const modeBtn = document.getElementById("mode-btn");
 const destroyBtn = document.getElementById("destroy-btn");
 const eraseBtn = document.getElementById("erase-btn");
@@ -90,6 +91,20 @@ function onEraseClick() {
   modeBtn.innerText = "지우개 모드";
 }
 
+function onFileChange(event) {
+  console.dir(event.target);
+  const file = event.target.files[0];
+  const url = URL.createObjectURL(file); // 브라우저의 메모리에서 그 파일의 url 만 얻어오기.
+  const image = new Image(); // 의 뜻은 html에서 <img srt=""/> 을 쓰는 것과 같음.
+  image.src = url;
+  image.onload = function () {
+    ctx.drawImage(image, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    fileInput.value = null;
+  };
+}
+
+// canvas.onmousemove = function onMove(){} 는 canvas.addEventListener("mousemove", onMove); 와 같다.  addEventListener 를 사용하면 이벤트안에 많은 이벤트리스너를 추가 할 수 있고, 같은 이벤트내에서 이벤트리스너들를 삭제할 수 있다.
+
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", cancelPainting);
@@ -98,12 +113,13 @@ canvas.addEventListener("click", onCanvasClick);
 lineWidth.addEventListener("change", onLineWidthChange);
 color.addEventListener("change", onColorChange);
 
-console.log(colorOptions);
+// console.log(colorOptions);
 colorOptions.forEach((color) => color.addEventListener("click", onColorClick));
 
 modeBtn.addEventListener("click", onModeClick);
 destroyBtn.addEventListener("click", onDestroyClick);
 eraseBtn.addEventListener("click", onEraseClick);
+fileInput.addEventListener("change", onFileChange);
 
 // 레인보우 선  그리기 =====
 // const colors = [
